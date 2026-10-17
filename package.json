@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port 5173 --host",
-    "build": "vite build",
+    "build": "node ./node_modules/vite/bin/vite.js build",
     "preview": "vite preview",
     "deploy": "vercel --prod"
   },
@@ -20,5 +20,9 @@
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "tailwindcss": "^3.4.19"
+  },
+  "allowScripts": {
+    "esbuild@0.14.47": true,
+    "esbuild@0.21.5": true
   }
 }
