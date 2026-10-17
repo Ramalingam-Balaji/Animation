@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta content="web_standard" name="shell-type" />
+  <title>Eat Protein — Peak Performance & High Protein Nutrition</title>
+  <meta name="description" content="Experience peak vitality with Eat Protein. Interactive scroll animation, high-protein menu, chef-crafted meals, and smart BMI calculator." />
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥚</text></svg>">
+
+  <!-- Google Fonts: Material Symbols, Outfit, and Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Outfit:wght@100..900&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN & Custom Config -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-fixed-dim": "#c6c6c7",
+            "surface-variant": "#d9e3f6",
+            "surface-container-low": "#eff4ff",
+            "surface-container-high": "#dee9fc",
+            "inverse-on-surface": "#eaf1ff",
+            "on-secondary-container": "#007230",
+            "surface": "#f8f9ff",
+            "background": "#f8f9ff",
+            "on-secondary": "#ffffff",
+            "tertiary-container": "#717272",
+            "on-primary-container": "#fff6f5",
+            "on-secondary-fixed": "#002109",
+            "primary-fixed": "#ffdad6",
+            "on-error": "#ffffff",
+            "surface-container": "#e6eeff",
+            "on-tertiary-fixed-variant": "#454747",
+            "outline-variant": "#e6bdb8",
+            "on-tertiary-container": "#f8f8f8",
+            "surface-container-lowest": "#ffffff",
+            "on-surface-variant": "#5c403c",
+            "on-error-container": "#93000a",
+            "secondary": "#006e2d",
+            "on-primary": "#ffffff",
+            "surface-bright": "#f8f9ff",
+            "tertiary-fixed": "#e2e2e2",
+            "outline": "#916f6b",
+            "inverse-surface": "#27313f",
+            "on-background": "#121c2a",
+            "on-surface": "#121c2a",
+            "primary-fixed-dim": "#ffb4ab",
+            "surface-dim": "#d0dbed",
+            "on-tertiary-fixed": "#1a1c1c",
+            "error-container": "#ffdad6",
+            "surface-container-highest": "#d9e3f6",
+            "on-tertiary": "#ffffff",
+            "primary": "#b70011",
+            "tertiary": "#585a5a",
+            "primary-container": "#dc2626",
+            "on-secondary-fixed-variant": "#005320",
+            "inverse-primary": "#ffb4ab",
+            "secondary-fixed": "#7ffc97",
+            "on-primary-fixed-variant": "#93000b",
+            "secondary-container": "#7cf994",
+            "error": "#ba1a1a",
+            "on-primary-fixed": "#410002",
+            "surface-tint": "#bf0715",
+            "secondary-fixed-dim": "#62df7d"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin": "2rem",
+            "space-md": "1rem",
+            "space-xl": "2.5rem",
+            "space-xs": "0.25rem",
+            "gutter": "1.5rem",
+            "space-sm": "0.5rem",
+            "space-lg": "1.5rem"
+          },
+          "fontFamily": {
+            "headline-md": ["Outfit"],
+            "headline-lg": ["Outfit"],
+            "body-lg": ["Inter"],
+            "headline-sm": ["Outfit"],
+            "label-md": ["Inter"],
+            "body-md": ["Inter"],
+            "label-lg": ["Inter"],
+            "body-sm": ["Inter"],
+            "label-sm": ["Inter"]
+          },
+          "fontSize": {
+            "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+            "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+            "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+            "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+            "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+            "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+            "body-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+            "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "500"}]
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+  </style>
+
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body class="bg-surface font-body-md text-on-surface">
+
+  <!-- Fullscreen Initial Preloader for 180 Frames -->
+  <div id="loader" class="loader-overlay">
+    <div class="loader-card">
+      <div class="loader-mascot-icon">
+        <span class="mascot-bounce">🥚</span>
+        <div class="mascot-cap-badge">e</div>
+      </div>
+      <h2 class="loader-title">EAT PROTEIN</h2>
+      <p class="loader-subtitle">Loading 180 frames of high-octane energy...</p>
+      
+      <div class="progress-container">
+        <div id="progress-bar" class="progress-bar" style="width: 0%"></div>
+      </div>
+      
+      <div class="loader-status">
+        <span id="loader-percentage">0%</span>
+        <span id="loader-count">0 / 180 frames</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Scroll Animation Section: Pure Animation, No Navbar, No Banner Clutter -->
+  <div id="scroll-track" class="scroll-track">
+    <div class="sticky-viewport">
+      <!-- Ambient Glow Behind Mascot -->
+      <div class="ambient-glow"></div>
+
+      <!-- Pure 180-Frame HTML5 Animation Canvas -->
+      <canvas id="animation-canvas"></canvas>
+    </div>
+  </div>
+
+  <!-- Main Content Sections (Remaining Sections from Provided Design File) -->
+  <main class="w-full bg-surface">
+
+    <!-- Products / Menu Section -->
+    <section class="w-full bg-surface-container-low py-24" id="menu-section">
+      <div class="max-w-7xl mx-auto px-gutter">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-space-lg">
+          <div>
+            <span class="text-label-lg text-primary font-bold uppercase tracking-widest">Fuel Station</span>
+            <h2 class="text-headline-lg text-on-surface mt-2">Power-Packed Menu</h2>
+          </div>
+          <div class="flex items-center gap-space-sm bg-surface p-1 rounded-xl shadow-sm">
+            <button class="px-4 py-2 rounded-lg bg-primary text-on-primary text-label-lg font-medium transition-all" data-category-filter="all">All Items</button>
+            <button class="px-4 py-2 rounded-lg text-on-surface-variant hover:text-on-surface text-label-lg font-medium transition-all" data-category-filter="shake">Shakes</button>
+            <button class="px-4 py-2 rounded-lg text-on-surface-variant hover:text-on-surface text-label-lg font-medium transition-all" data-category-filter="meal">Meals</button>
+            <button class="px-4 py-2 rounded-lg text-on-surface-variant hover:text-on-surface text-label-lg font-medium transition-all" data-category-filter="snack">Snacks</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Card 1: Shake -->
+          <div class="bg-surface rounded-2xl overflow-hidden shadow-xl shadow-primary/5 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between" data-menu-category="shake">
+            <div class="relative h-64 bg-surface-container overflow-hidden">
+              <img class="w-full h-full object-cover" alt="Turbo Chocolate Pro Protein Shake" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvKhwDavcVIJAplmo_vpXttE74M-aFdqxlbpA0b3_BLSb643fpMx5IgfFTmt0uhR8cU-G2h60BAhhSqYWVW2GetAjTKTHk09IjJOHMHnBwNpuPA_oYP8VUPkfkBSksxAzpKKHKM8RPLiV2B3b-gz6su3hxEm-7Kqq5X2QVbQj4v-ryJH_zkRp1XKu8hW-xmkIeURlULVsq93Q84nIjTYCiwvnAiZ_ygN2hF-pb95QoUGOiF3nhTw11Bw"/>
+              <span class="absolute top-4 right-4 bg-secondary text-on-secondary text-label-md font-bold px-3 py-1 rounded-full">52g Protein</span>
+            </div>
+            <div class="p-6 flex flex-col flex-grow justify-between">
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-label-md text-on-surface-variant uppercase tracking-wider">Shake</span>
+                  <span class="text-headline-md text-primary">$8.99</span>
+                </div>
+                <h3 class="text-headline-sm text-on-surface mb-2">Turbo Chocolate Pro</h3>
+                <p class="text-body-md text-on-surface-variant mb-4">Double-rich cocoa, isolate whey, almond milk, and natural peanut butter boost.</p>
+              </div>
+              <button class="order-now-btn w-full bg-primary-container text-on-primary-container font-bold py-3 rounded-xl hover:bg-primary transition-colors text-label-lg" data-item="Turbo Chocolate Pro">Order Now</button>
+            </div>
+          </div>
+
+          <!-- Card 2: Hot Meal -->
+          <div class="bg-surface rounded-2xl overflow-hidden shadow-xl shadow-primary/5 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between" data-menu-category="meal">
+            <div class="relative h-64 bg-surface-container overflow-hidden">
+              <img class="w-full h-full object-cover" alt="Iron Steak & Sweet Potato Meal" src="https://lh3.googleusercontent.com/aida-public/AB6AXuADwNJePvooYQbY2eaurbH8bKzeUufaJEmGwVzl2Tn9Z58eg1l6PWyrlDQ9jmG24ddRJOIdYG3SYes1BoOZIDijeCwZksW1lLumUgX9Xuav2i2hjXDkS0eOifHoPrDON5bEB_oMqU1Hoo0Oz4xXP0zAc51iT5uyZtgCUb6DR0RWg9yh7W1pnRn-bqn4Nf-iwX2YX6Q9xuSHBSJpZ3Bldqf4jfuF9pt1NG_aijep7MtTdeRxxXi7liIXcQ"/>
+              <span class="absolute top-4 right-4 bg-secondary text-on-secondary text-label-md font-bold px-3 py-1 rounded-full">60g Protein</span>
+            </div>
+            <div class="p-6 flex flex-col flex-grow justify-between">
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-label-md text-on-surface-variant uppercase tracking-wider">Hot Meal</span>
+                  <span class="text-headline-md text-primary">$14.99</span>
+                </div>
+                <h3 class="text-headline-sm text-on-surface mb-2">Iron Steak & Sweet Potato</h3>
+                <p class="text-body-md text-on-surface-variant mb-4">Grass-fed lean flank steak paired with antioxidant-rich roasted sweet potatoes.</p>
+              </div>
+              <button class="order-now-btn w-full bg-primary-container text-on-primary-container font-bold py-3 rounded-xl hover:bg-primary transition-colors text-label-lg" data-item="Iron Steak & Sweet Potato">Order Now</button>
+            </div>
+          </div>
+
+          <!-- Card 3: Snack -->
+          <div class="bg-surface rounded-2xl overflow-hidden shadow-xl shadow-primary/5 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between" data-menu-category="snack">
+            <div class="relative h-64 bg-surface-container overflow-hidden">
+              <img class="w-full h-full object-cover" alt="Alpha Power Bites Snack" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcovmnh55lstZzHCwuWp_RlzmOfH-20p0z4haMzD984D_aM0M5TM3KTYsUnzPFhOyLD8hvjUtQQkD8gm45ZLr10Mn3cDD2gsg7Pbv57soFmAivI9RCTZ7VbyvAT3IHF4MGy0dOeo_fFdNYJ0Dted69AaItcykac9B1mk-8F1fgC1xE_fNiuN66DMo5_BORFVU8q2R8bfX0oouF1ktqGXWjWTfnqm7P6iawI3y8irlulyaZO3T238x74w"/>
+              <span class="absolute top-4 right-4 bg-secondary text-on-secondary text-label-md font-bold px-3 py-1 rounded-full">25g Protein</span>
+            </div>
+            <div class="p-6 flex flex-col flex-grow justify-between">
+              <div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-label-md text-on-surface-variant uppercase tracking-wider">Snack</span>
+                  <span class="text-headline-md text-primary">$6.49</span>
+                </div>
+                <h3 class="text-headline-sm text-on-surface mb-2">Alpha Power Bites (6pk)</h3>
+                <p class="text-body-md text-on-surface-variant mb-4">No-bake energy balls packed with clean plant protein, oats, and organic honey.</p>
+              </div>
+              <button class="order-now-btn w-full bg-primary-container text-on-primary-container font-bold py-3 rounded-xl hover:bg-primary transition-colors text-label-lg" data-item="Alpha Power Bites">Order Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calculate BMI Section -->
+    <section class="w-full bg-surface py-24 relative overflow-hidden" id="bmi-section">
+      <div class="max-w-7xl mx-auto px-gutter">
+        <div class="bg-surface-container-high rounded-3xl p-8 lg:p-16 shadow-2xl shadow-primary/5 relative">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-6 flex flex-col gap-space-lg">
+              <span class="text-label-lg text-secondary font-bold uppercase tracking-widest">Interactive Tool</span>
+              <h2 class="text-headline-lg text-on-surface">Calculate Your BMI & Protein Target</h2>
+              <p class="text-body-lg text-on-surface-variant">
+                Enter your measurements below to instantly calculate your Body Mass Index (BMI) and receive customized daily macronutrient recommendations tailored by our certified sports nutritionists.
+              </p>
+              <div class="flex items-center gap-space-md text-on-surface-variant">
+                <div class="flex items-center gap-space-sm">
+                  <span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                  <span class="text-body-md">Instant Results</span>
+                </div>
+                <div class="flex items-center gap-space-sm">
+                  <span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                  <span class="text-body-md">Personalized Plan</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="lg:col-span-6 bg-surface rounded-2xl p-8 shadow-lg">
+              <form class="flex flex-col gap-space-md" id="bmi-form" onsubmit="event.preventDefault(); calculateBMI();">
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-label-md font-medium text-on-surface mb-1">Height (cm)</label>
+                    <input class="w-full bg-surface-container-low px-4 py-3 rounded-lg text-on-surface focus:outline-none focus:ring-2 focus:ring-primary transition-all" id="height" placeholder="175" required="" type="number" />
+                  </div>
+                  <div>
+                    <label class="block text-label-md font-medium text-on-surface mb-1">Weight (kg)</label>
+                    <input class="w-full bg-surface-container-low px-4 py-3 rounded-lg text-on-surface focus:outline-none focus:ring-2 focus:ring-primary transition-all" id="weight" placeholder="75" required="" type="number" />
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-label-md font-medium text-on-surface mb-1">Age</label>
+                  <input class="w-full bg-surface-container-low px-4 py-3 rounded-lg text-on-surface focus:outline-none focus:ring-2 focus:ring-primary transition-all" id="age" placeholder="28" required="" type="number" />
+                </div>
+                <div>
+                  <label class="block text-label-md font-medium text-on-surface mb-1">Activity Level</label>
+                  <select class="w-full bg-surface-container-low px-4 py-3 rounded-lg text-on-surface focus:outline-none focus:ring-2 focus:ring-primary transition-all" id="activity">
+                    <option value="1.2">Sedentary (little or no exercise)</option>
+                    <option value="1.375">Lightly active (light exercise 1-3 days/week)</option>
+                    <option selected="" value="1.55">Moderately active (moderate exercise 3-5 days/week)</option>
+                    <option value="1.725">Very active (hard exercise 6-7 days/week)</option>
+                  </select>
+                </div>
+                <button class="w-full bg-secondary text-on-secondary font-bold py-4 rounded-xl hover:bg-secondary-fixed-dim transition-all text-label-lg shadow-md mt-2" type="submit">
+                  Calculate & Get Recommendations
+                </button>
+              </form>
+
+              <div class="mt-6 p-6 rounded-xl bg-surface-container-low hidden" id="bmi-result">
+                <h4 class="text-headline-sm text-on-surface mb-2">Your Personal Metrics</h4>
+                <div class="grid grid-cols-2 gap-4 mt-4">
+                  <div>
+                    <p class="text-body-sm text-on-surface-variant">BMI Score</p>
+                    <p class="text-headline-md text-primary" id="bmi-score">--</p>
+                  </div>
+                  <div>
+                    <p class="text-body-sm text-on-surface-variant">Daily Protein Goal</p>
+                    <p class="text-headline-md text-secondary" id="protein-goal">--</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="w-full bg-surface-container-low py-24">
+      <div class="max-w-7xl mx-auto px-gutter grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+        <div class="lg:col-span-6 relative">
+          <div class="grid grid-cols-2 gap-4">
+            <img class="w-full h-72 object-cover rounded-2xl shadow-lg" alt="Athletes enjoying high protein nutrition" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDh-vhmJcMAk-34orSoVtC1RcyBd6hyWamI7X3VpWbja8uwGrGGpoqgJrWaZm4QvSMKHvXorrUmtF3MYFwjg12r-MMEC3gV2spvSe02_yfrCsMEhMZXkJfL579iCrg_09GW8URROXoO0zm14Mx4WiUnSZcx5ayJSyC7MqUUFNy6gFu6LiP48AAeYpawc35k-Kj8np8a4R_Mjb0S_k-D2b_nhiyT7UnJN45BT2kTyt9vrOCyniVqxki-VQ"/>
+            <img class="w-full h-72 object-cover rounded-2xl shadow-lg mt-8" alt="Chef plating high protein culinary dish" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfmreIVILtKTwPPtSJmoj689u8sF30pDFbtpfjWQv3cPNJc-IB9h-d0Ezy0ccwiBOg-yxZAmalVu0_gjHZvfea5hrFCs725z4qf1BTpYTFxWyBcSG8BEk-lk0GMo_sOgdTpSjXfTa0AT_lW9wo0qwvP8x1WpWi8bDPccsqJcp9JD-u9lNhNDzUAj1dHnfN8kMKq3buag6laeplLZbBu_bfPXkhSoIY3ewbVwtmMur5TPNW2dtjmjf60A"/>
+          </div>
+        </div>
+        <div class="lg:col-span-6 flex flex-col gap-space-lg">
+          <span class="text-label-lg text-primary font-bold uppercase tracking-widest">Our Mission</span>
+          <h2 class="text-headline-lg text-on-surface">Fueled by Purpose. Built for Results.</h2>
+          <p class="text-body-lg text-on-surface-variant">
+            At Eat Protein, we believe that eating healthy shouldn't feel like a chore. Our mission is to bridge the gap between peak physical performance and incredible culinary flavor. Every meal, shake, and snack is engineered by professional chefs and sports dietitians to ensure your body gets the exact building blocks it needs to thrive.
+          </p>
+          <div class="grid grid-cols-2 gap-6 pt-4">
+            <div class="flex items-start gap-space-md">
+              <div class="p-3 bg-primary/10 rounded-xl text-primary">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+              </div>
+              <div>
+                <h4 class="text-headline-sm text-on-surface mb-1">Chef Crafted</h4>
+                <p class="text-body-sm text-on-surface-variant">Gourmet flavors with zero artificial additives.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-space-md">
+              <div class="p-3 bg-secondary/10 rounded-xl text-secondary">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">eco</span>
+              </div>
+              <div>
+                <h4 class="text-headline-sm text-on-surface mb-1">Clean Sourcing</h4>
+                <p class="text-body-sm text-on-surface-variant">Sustainably raised proteins and organic greens.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- App Promo Section -->
+    <section class="w-full bg-surface py-24 relative overflow-hidden">
+      <div class="max-w-7xl mx-auto px-gutter bg-gradient-to-br from-primary-container to-primary rounded-3xl p-8 lg:p-16 text-on-primary-container relative overflow-hidden shadow-2xl">
+        <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-surface/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+          <div class="lg:col-span-7 flex flex-col gap-space-lg">
+            <span class="text-label-lg text-secondary-fixed font-bold uppercase tracking-widest">Eat Protein App</span>
+            <h2 class="text-headline-lg text-on-primary">Take Your Nutrition Everywhere You Go</h2>
+            <p class="text-body-lg text-on-primary/90 max-w-xl">
+              Download the Eat Protein mobile app to track your daily macros, earn loyalty rewards with every purchase, unlock exclusive discounts, and order ahead for lightning-fast pickup.
+            </p>
+            <div class="flex flex-wrap gap-4 pt-4">
+              <button class="bg-on-primary text-on-background font-bold px-6 py-3.5 rounded-xl hover:bg-surface-bright transition-all flex items-center gap-space-md shadow-lg" onclick="showToast('Eat Protein iOS App opening in App Store...')">
+                <span class="material-symbols-outlined text-2xl">phone_iphone</span>
+                <div class="text-left">
+                  <p class="text-label-sm text-on-surface-variant">Download on the</p>
+                  <p class="text-label-lg font-bold text-on-surface">App Store</p>
+                </div>
+              </button>
+              <button class="bg-on-primary text-on-background font-bold px-6 py-3.5 rounded-xl hover:bg-surface-bright transition-all flex items-center gap-space-md shadow-lg" onclick="showToast('Eat Protein Android App opening in Google Play...')">
+                <span class="material-symbols-outlined text-2xl">shop</span>
+                <div class="text-left">
+                  <p class="text-label-sm text-on-surface-variant">Get it on</p>
+                  <p class="text-label-lg font-bold text-on-surface">Google Play</p>
+                </div>
+              </button>
+            </div>
+          </div>
+          <div class="lg:col-span-5 flex justify-center">
+            <div class="relative w-72 h-[500px] bg-surface rounded-[40px] p-4 shadow-2xl border-4 border-surface/20">
+              <div class="w-full h-full bg-surface-container-low rounded-[32px] p-6 flex flex-col justify-between overflow-hidden">
+                <div>
+                  <div class="flex justify-between items-center mb-6">
+                    <span class="text-label-md font-bold text-on-surface">Eat Protein</span>
+                    <span class="material-symbols-outlined text-primary">notifications</span>
+                  </div>
+                  <div class="bg-primary/10 p-4 rounded-2xl mb-4">
+                    <p class="text-body-sm text-on-surface-variant">Today's Protein Goal</p>
+                    <p class="text-headline-md text-primary">145g / 160g</p>
+                    <div class="w-full bg-surface-container h-2 rounded-full mt-2 overflow-hidden">
+                      <div class="bg-primary h-full w-[90%] rounded-full"></div>
+                    </div>
+                  </div>
+                  <p class="text-label-lg font-semibold text-on-surface mb-2">Quick Order</p>
+                  <div class="bg-surface p-3 rounded-xl flex items-center gap-3 shadow-sm mb-2">
+                    <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary font-bold">🥤</div>
+                    <div>
+                      <p class="text-body-md font-medium text-on-surface">Turbo Chocolate</p>
+                      <p class="text-body-sm text-on-surface-variant">52g protein</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="bg-primary text-on-primary text-center py-3 rounded-xl font-bold text-label-lg cursor-pointer hover:bg-primary-container transition-all" onclick="showToast('Loyalty Rewards: 450 Points Available!')">
+                  View Rewards (450 pts)
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Franchise Section -->
+    <section class="w-full bg-surface-container-low py-24">
+      <div class="max-w-7xl mx-auto px-gutter grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+        <div class="lg:col-span-6 flex flex-col gap-space-lg">
+          <span class="text-label-lg text-primary font-bold uppercase tracking-widest">Business Opportunity</span>
+          <h2 class="text-headline-lg text-on-surface">Partner With Eat Protein</h2>
+          <p class="text-body-lg text-on-surface-variant">
+            Are you an entrepreneur passionate about fitness and healthy living? Bring the ultimate high-protein cafe and retail concept to your city. We provide comprehensive operational support, supply chain excellence, and a proven high-growth business model.
+          </p>
+          <div class="flex flex-col gap-space-md">
+            <div class="flex items-center gap-space-md">
+              <span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">verified</span>
+              <span class="text-body-md text-on-surface font-medium">Proven high-margin retail model</span>
+            </div>
+            <div class="flex items-center gap-space-md">
+              <span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">verified</span>
+              <span class="text-body-md text-on-surface font-medium">Complete staff training and marketing toolkit</span>
+            </div>
+            <div class="flex items-center gap-space-md">
+              <span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">verified</span>
+              <span class="text-body-md text-on-surface font-medium">Exclusive regional territory rights</span>
+            </div>
+          </div>
+        </div>
+        <div class="lg:col-span-6 bg-surface rounded-3xl p-8 lg:p-10 shadow-xl">
+          <h3 class="text-headline-sm text-on-surface mb-6">Franchise Partnership Inquiry</h3>
+          <form class="flex flex-col gap-space-md" id="franchise-form">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-label-md font-medium text-on-surface mb-1">Full Name</label>
+                <input class="w-full bg-surface-container-low px-4 py-3 rounded-lg text-on-surface focus:outline-none focus:ring-2 focus:ring-primary transition-all" placeholder="John Doe" required="" type="text" />
+              </div>
+              <div>
+                <label class="block text-label-md font-medium text-on-surface mb-1">Email Address</label>
+                <input class="w-full bg-surface-container-low px-4 py-3 rounded-lg text-on-surface focus:outline-none focus:ring-2 focus:ring-primary transition-all" placeholder="john@example.com" required="" type="email" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-label-md font-medium text-on-surface mb-1">Target City / Region</label>
+              <input class="w-full bg-surface-container-low px-4 py-3 rounded-lg text-on-surface focus:outline-none focus:ring-2 focus:ring-primary transition-all" placeholder="New York, NY" required="" type="text" />
+            </div>
+            <div>
+              <label class="block text-label-md font-medium text-on-surface mb-1">Estimated Investment Capital</label>
+              <select class="w-full bg-surface-container-low px-4 py-3 rounded-lg text-on-surface focus:outline-none focus:ring-2 focus:ring-primary transition-all">
+                <option>$100k - $250k</option>
+                <option>$250k - $500k</option>
+                <option>$500k+</option>
+              </select>
+            </div>
+            <button class="w-full bg-primary text-on-primary font-bold py-4 rounded-xl hover:bg-primary-container transition-all text-label-lg shadow-md mt-2" type="submit">
+              Submit Application
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full bg-surface-container-low py-space-xl">
+    <div class="max-w-7xl mx-auto px-gutter text-center text-on-surface-variant text-body-sm">
+      © 2024 Eat Protein Brand. All rights reserved.
+    </div>
+  </footer>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
