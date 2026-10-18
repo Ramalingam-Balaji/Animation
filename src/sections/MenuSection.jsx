@@ -1,44 +1,108 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import products from '../data/products.js';
+import { useNavigate } from 'react-router-dom';
+import { Store } from 'lucide-react';
+import { FOOD_STORE_CATEGORIES } from '../data/foodStoresData';
 import Eyebrow from '../components/Eyebrow.jsx';
 
-const categories = [
+// --------------------------------
+// FILTER TABS
+// --------------------------------
+const FILTER_TABS = [
   ['all', 'All Items'],
-  ['shake', 'Shakes'],
-  ['meal', 'Meals'],
-  ['snack', 'Snacks'],
+  ['veg', 'Veg'],
+  ['nonveg', 'Non-Veg'],
+  ['protein', 'Proteins'],
 ];
 
-const easeOutCubic = [0.25, 0.1, 0.25, 1];
+// Map a category slug/name to a food type so the
+// Veg / Non-Veg / Proteins filter can group the cards.
+const inferCategoryType = (slug, name) => {
+  const key = `${slug} ${name}`.toLowerCase();
 
-// Parent orchestrates the stagger so cards fall one-by-one
-const containerVariants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
-  exit: { transition: { staggerChildren: 0.08, staggerDirection: -1 } },
+  if (key.includes('non')) return 'nonveg';
+  if (key.includes('restaurant')) return 'nonveg';
+
+  if (
+    key.includes('egg') ||
+    key.includes('dairy') ||
+    key.includes('protein') ||
+    key.includes('diet')
+  ) {
+    return 'protein';
+  }
+
+  // Everything else (veg, fruits, vegetables, bakery, sweets, home foods)
+  // defaults to veg.
+  return 'veg';
 };
 
-// Each card falls from top, exits downward (opposite)
+// Build the list of category cards from FOOD_STORE_CATEGORIES.
+const buildCategoryCards = () =>
+  Object.entries(FOOD_STORE_CATEGORIES).map(([slug, data]) => {
+    const name = data?.name || slug;
+    const stores = Array.isArray(data?.stores) ? data.stores : [];
+    const banners = Array.isArray(data?.banners) ? data.banners : [];
+
+    const image =
+      data?.image ||
+      banners[0]?.image ||
+      stores[0]?.image ||
+      '/category-placeholder.jpg';
+
+    return {
+      slug,
+      name,
+      image,
+      storeCount: stores.length,
+      type: inferCategoryType(slug, name),
+    };
+  });
+
+// --------------------------------
+// ANIMATION VARIANTS
+// (same UI/animation feel as the original MenuSection)
+// --------------------------------
+const easeOutCubic = [0.25, 0.1, 0.25, 1];
+
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
+  exit: { transition: { staggerChildren: 0.06, staggerDirection: -1 } },
+};
+
 const cardVariants = {
   hidden: { y: -120, opacity: 0 },
   visible: {
     y: 0,
     opacity: 1,
-    transition: { duration: 0.7, ease: easeOutCubic },
+    transition: { duration: 0.6, ease: easeOutCubic },
   },
   exit: {
     y: 80,
     opacity: 0,
-    transition: { duration: 0.4, ease: easeOutCubic },
+    transition: { duration: 0.35, ease: easeOutCubic },
   },
 };
 
 export default function MenuSection({ showToast }) {
   const [category, setCategory] = useState('all');
-  const filteredProducts = products.filter(
-    (item) => category === 'all' || item.category === category,
-  );
+  const navigate = useNavigate();
+
+  const allCards = buildCategoryCards();
+
+  // Apply the Veg / Non-Veg / Proteins filter using the inferred type.
+  const filteredCards = allCards.filter((card) => {
+    if (category === 'all') return true;
+    return card.type === category;
+  });
+
+  const handleCardClick = (card) => {
+    if (typeof showToast === 'function') {
+      showToast(`Browsing ${card.name} stores... 🥗`);
+    }
+    navigate(`/food-stores/${card.slug}`);
+  };
 
   return (
     <section id="menu-section" className="bg-[#eff4ff] py-20 sm:py-24">
@@ -48,11 +112,13 @@ export default function MenuSection({ showToast }) {
             <Eyebrow>Fuel Station</Eyebrow>
             <h2 className="section-title">Power-Packed Menu</h2>
           </div>
+
+          {/* Filter tabs — All / Veg / Non-Veg / Proteins */}
           <div
             className="flex max-w-full gap-1 overflow-x-auto rounded-xl bg-white p-1 shadow-sm"
             aria-label="Filter menu items"
           >
-            {categories.map(([value, title]) => (
+            {FILTER_TABS.map(([value, title]) => (
               <button
                 key={value}
                 onClick={() => setCategory(value)}
@@ -72,56 +138,62 @@ export default function MenuSection({ showToast }) {
         <AnimatePresence mode="wait">
           <motion.div
             key={category}
-            className="grid gap-7 md:grid-cols-2 lg:grid-cols-3"
+            className="
+              grid gap-3
+              grid-cols-2
+              sm:grid-cols-3
+              md:grid-cols-5
+              lg:grid-cols-9
+            "
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: false, amount: 0.2, margin: '-60px 0px -60px 0px' }}
             exit="exit"
           >
-            {filteredProducts.map((item) => (
-              <motion.article
-                key={item.name}
-                className="menu-card flex flex-col overflow-hidden rounded-2xl bg-white shadow-xl shadow-[#b70011]/5"
+            {filteredCards.map((card) => (
+              <motion.button
+                type="button"
+                key={card.slug}
+                onClick={() => handleCardClick(card)}
+                aria-label={`Browse ${card.name} stores`}
                 variants={cardVariants}
+                className="
+                  menu-card group flex h-full w-full flex-col
+                  overflow-hidden rounded-2xl bg-white text-left
+                  shadow-xl shadow-[#b70011]/5 transition
+                  hover:-translate-y-1 hover:shadow-2xl
+                "
               >
-                <div className="relative h-64 overflow-hidden bg-[#e6eeff]">
+                {/* Category image */}
+                <div className="relative h-28 w-full overflow-hidden bg-[#e6eeff] sm:h-32">
                   <img
-                    className="h-full w-full object-cover transition duration-500 hover:scale-105"
-                    src={item.image}
-                    alt={item.name}
+                    className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                    src={card.image}
+                    alt={card.name}
+                    loading="lazy"
                   />
-                  <span className="absolute right-4 top-4 rounded-full bg-[#006e2d] px-3 py-1 text-xs font-bold text-white">
-                    {item.protein}
+                  <span className="absolute right-2 top-2 rounded-full bg-[#006e2d] px-2 py-0.5 text-[9px] font-bold text-white sm:text-[10px]">
+                    {card.type === 'nonveg'
+                      ? 'NON-VEG'
+                      : card.type === 'protein'
+                        ? 'PROTEIN'
+                        : 'VEG'}
                   </span>
                 </div>
-                <div className="flex flex-1 flex-col justify-between p-6">
-                  <div>
-                    <div className="mb-2 flex items-center justify-between">
-                      <span className="text-xs font-semibold uppercase tracking-wider text-[#5c403c]">
-                        {item.label}
-                      </span>
-                      <span className="text-xl font-bold text-[#b70011]">
-                        {item.price}
-                      </span>
-                    </div>
-                    <h3 className="mb-2 text-xl font-semibold text-[#121c2a]">
-                      {item.name}
-                    </h3>
-                    <p className="mb-5 text-sm leading-6 text-[#5c403c]">
-                      {item.description}
-                    </p>
-                  </div>
-                  <button
-                    onClick={() =>
-                      showToast(`Added ${item.name} to your order bag! 🥤`)
-                    }
-                    className="w-full rounded-xl bg-[#dc2626] py-3 font-bold text-white transition hover:bg-[#b70011]"
-                  >
-                    Order Now
-                  </button>
+
+                {/* Card body — compact so 9 fit in one row */}
+                <div className="flex flex-1 flex-col p-3">
+                  <h3 className="text-sm font-bold leading-tight text-[#121c2a] sm:text-base">
+                    {card.name}
+                  </h3>
+
+                  <span className="mt-1.5 inline-flex items-center gap-1 text-[11px] font-semibold text-[#5c403c]">
+                    <Store size={12} />
+                    {card.storeCount} Store{card.storeCount === 1 ? '' : 's'}
+                  </span>
                 </div>
-              </motion.article>
+              </motion.button>
             ))}
           </motion.div>
         </AnimatePresence>

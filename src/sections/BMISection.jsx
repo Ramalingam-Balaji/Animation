@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import {
   ArrowRight,
@@ -6,11 +5,20 @@ import {
   Heart,
   Leaf,
   UserRound,
-  Baby,
-  HeartHandshake,
-  PersonStanding,
-  Dumbbell,
 } from "lucide-react";
+
+import {
+  LuUserRound,
+  LuBaby,
+} from "react-icons/lu";
+
+import { GiWeightLiftingUp } from "react-icons/gi";
+import { MdPregnantWoman } from "react-icons/md";
+import { FaPersonBreastfeeding } from "react-icons/fa6";
+import {
+  FaChild,
+  FaFemale,
+} from "react-icons/fa";
 
 import Eyebrow from "../components/Eyebrow.jsx";
 
@@ -23,11 +31,11 @@ const PROFILES = [
 ];
 
 const PROFILE_ICONS = {
-  Adult: UserRound,
-  Kid: Baby,
-  "Pregnant Woman": PersonStanding,
-  "Feeding Mother": HeartHandshake,
-  Bodybuilder: Dumbbell,
+  Adult: LuUserRound,
+  Kid: LuBaby,
+  "Pregnant Woman": MdPregnantWoman,
+  "Feeding Mother": FaPersonBreastfeeding,
+  Bodybuilder: GiWeightLiftingUp,
 };
 
 const PROFILE_PROTEIN_FACTORS = {
@@ -36,6 +44,21 @@ const PROFILE_PROTEIN_FACTORS = {
   "Pregnant Woman": 1.5,
   "Feeding Mother": 1.5,
   Bodybuilder: 1.7,
+};
+
+// Gender icons — Boy uses FaChild, Girl uses FaFemale (react-icons/fa)
+const GENDER_ICONS = {
+  Boy: FaChild,
+  Girl: FaFemale,
+};
+
+// Age ranges per profile
+// Kids: 1 to 19, all others: 20 to 100
+const getAgeRange = (selectedProfile) => {
+  if (selectedProfile === "Kid") {
+    return { min: 1, max: 19, defaultAge: 10 };
+  }
+  return { min: 20, max: 100, defaultAge: 25 };
 };
 
 const BENEFITS = [
@@ -76,6 +99,11 @@ export default function BMISection({ showToast }) {
 
   const handleProfileChange = (nextProfile) => {
     setProfile(nextProfile);
+
+    // Reset age to a valid value inside the new profile's age range
+    const { defaultAge } = getAgeRange(nextProfile);
+    setAge(defaultAge);
+
     invalidateResult();
   };
 
@@ -94,31 +122,16 @@ export default function BMISection({ showToast }) {
     const heightValue = Number(height);
     const weightValue = Number(weight);
 
+    const { min: ageMin, max: ageMax } = getAgeRange(profile);
+
     if (
       !Number.isFinite(ageValue) ||
-      ageValue < 0 ||
-      ageValue > 100
+      ageValue < ageMin ||
+      ageValue > ageMax
     ) {
-      notify("Please select a valid age.");
-      return false;
-    }
-
-    const adultProfiles = [
-      "Adult",
-      "Pregnant Woman",
-      "Feeding Mother",
-      "Bodybuilder",
-    ];
-
-    if (adultProfiles.includes(profile) && ageValue < 20) {
       notify(
-        `For the ${profile} profile, age must be 20 years or above.`
+        `For the ${profile} profile, age must be between ${ageMin} and ${ageMax} years.`
       );
-      return false;
-    }
-
-    if (profile === "Kid" && ageValue > 19) {
-      notify("For the Kid profile, age must be 19 years or below.");
       return false;
     }
 
@@ -256,13 +269,20 @@ export default function BMISection({ showToast }) {
         : "text-slate-500 hover:text-[#006e2d]"
     }`;
 
+  // Build the age dropdown options dynamically based on the selected profile
+  const { min: ageMin, max: ageMax } = getAgeRange(profile);
+  const ageOptions = Array.from(
+    { length: ageMax - ageMin + 1 },
+    (_, index) => ageMin + index
+  );
+
   return (
     <section
       id="bmi-section"
       className="scroll-mt-20 bg-white px-3 py-8 sm:px-5 sm:py-12 lg:py-16"
     >
-      <div className="mx-auto w-full max-w-[1450px] rounded-2xl bg-gradient-to-r from-[#f0faea] to-[#edf9e9] p-4 shadow-lg shadow-green-900/5 sm:p-6 lg:p-8">
-        <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-[39%_61%] lg:gap-7">
+      <div className="mx-auto w-full max-w-7xl rounded-2xl bg-gradient-to-r from-[#f0faea] to-[#edf9e9] p-4 shadow-lg shadow-green-900/5 sm:p-6 lg:p-8">
+        <div className="grid grid-cols-1 items-center gap-6 lg:grid-cols-[45%_50%] lg:gap-7">
           {/* LEFT CONTENT */}
           <div className="min-w-0">
             <Eyebrow color="green">
@@ -296,7 +316,7 @@ export default function BMISection({ showToast }) {
                   </p>
 
                   {subtitle && (
-                    <p className="text-[9px] font-semibold leading-3 text-slate-600 sm:text-[10px]">
+                    <p className="text-[9px] font-bold leading-3 text-slate-600 sm:text-xs">
                       {subtitle}
                     </p>
                   )}
@@ -306,7 +326,7 @@ export default function BMISection({ showToast }) {
           </div>
 
           {/* CALCULATOR CARD */}
-          <div className="mx-auto w-full max-w-[680px] min-w-0 rounded-2xl bg-white p-3 shadow-lg sm:p-4">
+          <div className="mx-auto w-full max-w-[500px] min-w-0 rounded-2xl bg-white p-3 shadow-lg sm:p-4">
             {/* PROFILE TABS */}
             <div className="flex items-start justify-center gap-1.5 pb-3 sm:gap-3">
               {PROFILES.map((item) => {
@@ -354,6 +374,7 @@ export default function BMISection({ showToast }) {
                 <div className="grid grid-cols-2 gap-3">
                   {["Boy", "Girl"].map((item) => {
                     const selected = gender === item;
+                    const Icon = GENDER_ICONS[item];
 
                     return (
                       <button
@@ -370,7 +391,7 @@ export default function BMISection({ showToast }) {
                             : "border-slate-200 text-slate-600 hover:border-green-300"
                         }`}
                       >
-                        <UserRound size={19} strokeWidth={1.8} />
+                        <Icon size={19} strokeWidth={1.8} />
                         <span className="text-sm font-bold">{item}</span>
                       </button>
                     );
@@ -379,10 +400,10 @@ export default function BMISection({ showToast }) {
               </div>
             )}
 
-            {/* AGE */}
+            {/* AGE — dynamically limited based on selected profile */}
             <div className="mt-2 rounded-xl border border-slate-100 bg-white p-3 shadow-sm">
               <label className="block text-xs font-medium text-slate-500">
-                Age (YRS)
+                 Age (YRS){/* — {ageMin} to {ageMax} */}
 
                 <select
                   value={age}
@@ -392,13 +413,11 @@ export default function BMISection({ showToast }) {
                   }}
                   className="mt-1.5 h-10 w-full rounded-lg border-0 bg-slate-100 px-3 text-sm font-medium text-slate-800 outline-none focus:ring-2 focus:ring-green-400"
                 >
-                  {Array.from({ length: 101 }, (_, index) => index).map(
-                    (value) => (
-                      <option key={value} value={value}>
-                        {value} years
-                      </option>
-                    )
-                  )}
+                  {ageOptions.map((value) => (
+                    <option key={value} value={value}>
+                      {value} years
+                    </option>
+                  ))}
                 </select>
               </label>
             </div>

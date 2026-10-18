@@ -2,7 +2,7 @@ import StoreButton from '../components/StoreButton.jsx';
 import Eyebrow from '../components/Eyebrow.jsx';
 
 export default function AppPromo({ showToast }) {
-  return <section className="bg-white py-20 sm:py-24">
+  return <section id="app-promo" className="bg-white py-20 sm:py-24">
     <div className="mx-auto max-w-7xl px-5 sm:px-8">
       <div className="rounded-3xl bg-gradient-to-br from-[#dc2626] to-[#b70011] p-6 text-white shadow-2xl sm:p-10 lg:p-16">
         <div className="grid items-center gap-12 lg:grid-cols-12">
