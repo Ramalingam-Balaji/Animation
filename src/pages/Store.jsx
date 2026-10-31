@@ -517,7 +517,7 @@ export default function Store() {
       </section>
 
       {/* CONTACT CTA — restored with the same reveal animation */}
-    {/*  <section className="store-reveal store-from-top bg-gradient-to-r from-[#176b38] via-[#159447] to-[#f97316] px-5 py-14 text-white sm:py-16">
+     <section className="store-reveal store-from-top bg-gradient-to-r from-[#176b38] via-[#159447] to-[#f97316] px-5 py-14 text-white sm:py-16">
         <div className="mx-auto max-w-5xl text-center">
           <ShieldCheck className="mx-auto" size={38} />
           <h2 className="mt-4 text-3xl font-black sm:text-4xl">
@@ -561,7 +561,7 @@ export default function Store() {
             <ArrowRight size={18} />
           </button>
         </div>
-      </section> */}
+      </section>
 
       {/* APPLICATION MODAL */}
       {showModal && (
